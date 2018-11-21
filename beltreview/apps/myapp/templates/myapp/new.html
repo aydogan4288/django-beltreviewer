@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>New Movie</title>
+</head>
+<body>
+	<h1>New Movie</h1>
+	<a href="/">Home</a>
+	<a href="/new">New Movie</a>
+	<a href="/clear">Logout</a>
+	<form action="/create" method="POST">
+		{% csrf_token %}
+		<input type="text" name="title" placeholder="Title">
+		<input type="text" name="year" placeholder="Year">
+		<input type="submit" value="submit">
+			{% if messages %}
+				{% for message in messages %}
+						<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+				{% endfor %}
+			{% endif %}
+	</form>
+</body>
+</html>

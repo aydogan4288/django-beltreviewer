@@ -1,0 +1,121 @@
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<style type="text/css">
+	* {
+		margin: 0 auto;
+		padding: 0;
+	}
+	#container {
+		margin: 20px auto;
+		padding: 20px;
+	}
+	.boxes{
+		width: calc(50% - 20px);
+		border: 1px solid black;
+		display: inline-block;
+		vertical-align: top;
+		padding: 10px;
+	}
+	#header{
+		width: 100%;
+	}
+	.wbord{
+		border: 1px solid black;
+		width: 50%;
+	}
+	.btn{
+		display: inline-block;
+	}
+	h4{
+		margin: 20px 0 0 0;
+	}
+</style>
+</head>
+<body>
+	<div id="container">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <a class="navbar-brand" href="#">Movies</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item active">
+		        <a class="nav-link" href="/dash">Home <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="/new">New Movie</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="/clear">Logout</a>
+		      </li>
+		    </ul>
+		  </div>
+		</nav>
+		<h2>Welcome {{user.username}}!</h2>
+		<h1>Favorite Movies</h1>	
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Movie</th>
+					<th scope="col">Year</th>
+					<th scope="col">Date Added</th>
+					<th scope="col">Added By</th>
+					<th scope="col">Remove?</th>
+				</tr>
+			</thead>
+			{% for movie in mymovies %}
+			<tr>
+				<td><a href="/show/{{movie.id}}">{{ movie.title }}</a></td>
+				<td>{{ movie.year }}</td>
+				<td>{{ movie.created_at}}</td>
+				<td>{{ movie.uploader.username}}</td>
+				<td>
+				{% if movie.uploader.id == request.session.user_id %}
+
+					<a href="/delete/{{ movie.id }}"><button class="btn btn-success">Delete</button></a>
+				{%else%}
+
+					<a href="/unfavorite/{{ movie.id }}"><button class="btn btn-primary">unfavorite</button></a>
+				{%endif%}
+
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+		<h1>Non-Favorited Movies</h1>
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Movie</th>
+					<th scope="col">Year</th>
+					<th scope="col">Date Added</th>
+					<th scope="col">Added By</th>
+					<th scope="col">Favorite?</th>
+				</tr>
+			</thead>
+			{% for movie in movies %}
+			<tr>
+				<td><a href="/show/{{movie.id}}">{{ movie.title }}</a></td>
+				<td>{{ movie.year }}</td>
+				<td>{{ movie.created_at}}</td>
+				<td>{{ movie.uploader.username}}</td>
+				<td>
+				<a href="/favorite/{{movie.id}}"><button class="btn btn-success">Favorite</button></a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+</body>
